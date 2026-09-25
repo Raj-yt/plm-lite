@@ -78,16 +78,3 @@ so you can see the cycle detection fire on first run.
 - Diff view between two versions of a part, not just a flat history log
 - Swap the flat-file format for JSON so it's a real interchange format
 
-## Talking points for interview
-
-- **Why Composite pattern for Assembly**: lets the BOM tree treat leaf
-  parts and nested sub-assemblies identically — `getCost()` doesn't care
-  how deep the tree goes.
-- **Why DFS with a recursion stack, not just a visited set**: a plain
-  visited set can't distinguish "already fully explored" from "currently
-  being explored higher up this same path" — that distinction is exactly
-  what detects a cycle vs. a diamond-shaped (safely shared) dependency.
-- **Trade-off I made**: rollback-on-cycle currently rebuilds the
-  `Assembly` object rather than removing the one bad edge in place —
-  simple and correct, but not the most efficient; a proper undo-log would
-  scale better for a large BOM.
